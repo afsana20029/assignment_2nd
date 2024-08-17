@@ -11,9 +11,8 @@ class ProfilePage extends StatelessWidget {
         middle: Text('Profile'),
         leading: Icon(CupertinoIcons.back),
       ),
-      child:SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-      child:Row(
+      child:
+     Row(
        mainAxisAlignment: MainAxisAlignment.end,
          crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -45,7 +44,7 @@ class ProfilePage extends StatelessWidget {
             ),
         ],
       )
-      ));
+      );
 
   }
 }
