@@ -1,7 +1,9 @@
+import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -10,80 +12,133 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: HomeActivity());
+    return MaterialApp(
+        debugShowCheckedModeBanner:false,
+        home: HomeScreen());
   }
 }
 
-class HomeActivity extends StatelessWidget {
-  const HomeActivity({super.key});
+class HomeScreen extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return HomeScreenState();
+  }
+}
 
+class HomeScreenState extends State<HomeScreen> {
+  int counter = 0;
   @override
   Widget build(BuildContext context) {
-    MediaQueryData mediaQuery = MediaQuery.of(context);
-    print(mediaQuery.size.width);
-    print(mediaQuery.size.height);
-    print(mediaQuery.size.aspectRatio);
-    print(mediaQuery.size.flipped);
-    // print(mediaQuery.devicePixelRatio);
-    if (mediaQuery.size.width < 640) {
-      print('this is a phone');
-    } else if (mediaQuery.size.width > 640 && mediaQuery.size.width < 1000) {
-      print('this is a tab');
-    } else {
-      print('laptop/desktop');
-    }
     return Scaffold(
       appBar: AppBar(
         title: Text('Home'),
+        backgroundColor: Colors.lightBlue,
+        actions: [
+          IconButton(onPressed: (){}, icon:Icon(Icons.comment,)),
+          IconButton(onPressed: (){}, icon:Icon(Icons.search)),
+          IconButton(onPressed: (){}, icon:Icon(Icons.call)),
+        ],
       ),
-      body: OrientationBuilder(builder: (context, Orientation orientation) {
-        print(orientation);
-        if(orientation==Orientation.portrait){
-          return Column(
+      body: Center(
+        child: Text('Counter $counter'),
+      ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            elevation: 10,
+            onPressed: () {
+              counter++;
+              print(counter);
+              setState(() {});
+            },
+            child: Icon(Icons.add),
+          ),
+          SizedBox(
+            height: 8,
+          ),
+          FloatingActionButton(
+            elevation: 10,
+            onPressed: () {
+              // counter--;
+              // print(counter);
+              // setState(() {});
+            },
+            child: Icon(Icons.camera_alt),
+          ),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Colors.black,
+        unselectedItemColor: Colors.grey,
+        showSelectedLabels: true,
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'person'),
+          BottomNavigationBarItem(icon: Icon(Icons.update), label: 'update'),
+          BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
+        ],
+      ),
+      drawer: SafeArea(
+        child: Drawer(
+          child: ListView(
             children: [
-              Wrap(
-                  alignment: WrapAlignment.center,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  spacing: 10,
-                  children: [
-                    Text('hdsfhd '),
-                    Text('hdsfhd fjdhf dfdh'),
-                    Text('hdsfhd fjdhf dfdhjdfd'),
-                    Text('random'),
-                    Text('hdsfhd fjdhf dfdhjdfd'),
-                  ]),
-              Text(orientation.name)
-            ],
-          );
-        }else {
-        return  Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text('Hello'),
-              Text('hi'),
-              Text(orientation.name)
+              DrawerHeader(
+                  padding: EdgeInsets.all(10),
+                  child: UserAccountsDrawerHeader(
+                    accountEmail: Text('afsana@gmail.com'), accountName:Text('Afsana'),
+                  )),
+              ListTile(
+                title: Text('email'),
+                leading: Icon(Icons.email),
+              ),
+              ListTile(
+                title: Text('contact'),
+                leading: Icon(Icons.contact_mail),
+              ),
+              ListTile(
+                title: Text('profile'),
+                leading: Icon(Icons.person),
+              ),
+              ListTile(
+                title: Text('call'),
+                leading: Icon(Icons.phone),
+              ),
+              ListTile(
+                title: Text('community'),
+                leading: Icon(Icons.group),
+              ),
             ],
           ),
-        );
-        }
-        // return Column(
-        //   children: [
-        //     Wrap(
-        //         alignment: WrapAlignment.center,
-        //         crossAxisAlignment: WrapCrossAlignment.center,
-        //         spacing: 10,
-        //         children: [
-        //           Text('hdsfhd '),
-        //           Text('hdsfhd fjdhf dfdh'),
-        //           Text('hdsfhd fjdhf dfdhjdfd'),
-        //           Text('random'),
-        //           Text('hdsfhd fjdhf dfdhjdfd'),
-        //         ]),
-        //     Text(orientation.name)
-        //   ],
-        // );
-      }),
+        ),
+      ),
+
     );
   }
 }
+
+// class HomeActivity extends StatelessWidget {
+//   HomeActivity({super.key});
+//
+//   int counter = 0;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Home'),
+//         backgroundColor: Colors.lightBlue,
+//       ),
+//       body: Center(
+//         child: Text('Counter $counter'),
+//       ),
+//       floatingActionButton: FloatingActionButton(
+//         elevation: 10,
+//         onPressed: () {
+//           counter++;
+//           print(counter);
+//         },
+//         child: Icon(Icons.add),
+//       ),
+//     );
+//   }
+// }
